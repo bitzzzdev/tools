@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Chat Exporter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div class="mark">↧</div>
+      <div><h1>AI Chat Exporter</h1><p>Export the conversation in this tab</p></div>
+    </header>
+    <label for="format">Export format</label>
+    <select id="format">
+      <option value="md">Markdown (.md)</option>
+      <option value="pdf">PDF (print dialog)</option>
+      <option value="json">JSON (.json)</option>
+      <option value="txt">Plain text (.txt)</option>
+    </select>
+    <button id="export">Export current chat</button>
+    <p id="status" role="status">Works with ChatGPT, Claude, Gemini, and many other chat sites.</p>
+    <footer>Only reads the page you explicitly export. Nothing is uploaded.</footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "AI Chat Exporter",
+  "version": "1.0.0",
+  "description": "Export the currently open AI conversation to Markdown, JSON, TXT, or PDF.",
+  "permissions": ["activeTab", "scripting", "downloads"],
+  "action": {
+    "default_title": "Export this AI chat",
+    "default_popup": "popup.html"
+  }
+}
