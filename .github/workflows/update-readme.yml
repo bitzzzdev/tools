@@ -1,0 +1,55 @@
+name: Update README Table
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.github/workflows/**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-table:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run README table updater
+        run: |
+          python3 scripts/update_readme_table.py
+
+      - name: Commit and push changes if updated
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet README.md; then
+            git add README.md
+            git commit -m "Auto-update tools table in README"
+            git push
+          else
+            echo "No changes in README table."
+          fi
+
+      - name: Check in PR
+        if: github.event_name == 'pull_request'
+        run: |
+          if ! git diff --quiet README.md; then
+            echo "README table is out of date. Run 'python3 scripts/update_readme_table.py' locally."
+            exit 1
+          fi

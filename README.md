@@ -6,11 +6,11 @@ Made by [bitzzdev](https://github.com/bitzzdev).
 
 ## Directory
 
+<!-- TOOLS_TABLE_START -->
 | Tool | Type | Description |
 |---|---|---|
-| [`chat-exporter`](chat-exporter/) | Browser Extension | Export conversations from Claude, ChatGPT, Gemini, and other AI chats into Markdown, JSON, TXT, or PDF. |
-
----
+| [`chat-exporter`](chat-exporter/) | Browser Extension | Export the currently open AI conversation to Markdown, JSON, TXT, or PDF. |
+<!-- TOOLS_TABLE_END -->
 
 ## Tools overview
 
