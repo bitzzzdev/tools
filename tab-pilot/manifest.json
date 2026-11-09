@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "TabPilot - AI Browser Automation Bridge",
+  "short_name": "TabPilot",
+  "version": "1.0.0",
+  "description": "Enables ChatGPT, Claude, Gemini, Meta AI, and other AI tools to inspect, click, scroll, type, and automate any chosen browser tab.",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TabPilot - AI Browser Automation",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://www.meta.ai/*",
+        "https://meta.ai/*",
+        "https://chat.deepseek.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*"
+      ],
+      "js": ["ai-bridge.js"],
+      "css": ["ai-bridge.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["target-agent.js"],
+      "css": ["target-agent.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

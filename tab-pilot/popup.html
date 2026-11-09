@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TabPilot</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <img src="icons/icon32.png" alt="TabPilot" width="22" height="22">
+        </div>
+        <div>
+          <h1>TabPilot</h1>
+          <p class="subtitle">AI Browser Automation Bridge</p>
+        </div>
+      </div>
+      <div class="target-status-pill" id="target-pill">
+        <span class="dot" id="status-dot"></span>
+        <span class="status-name" id="status-name">No Target</span>
+      </div>
+    </header>
+
+    <nav class="nav-tabs">
+      <button class="nav-btn active" data-tab="tab-connect">Target Tab</button>
+      <button class="nav-btn" data-tab="tab-runner">Action Runner</button>
+      <button class="nav-btn" data-tab="tab-prompt">AI Guide</button>
+      <button class="nav-btn" data-tab="tab-settings">Settings & Logs</button>
+    </nav>
+
+    <!-- TAB 1: CONNECT TARGET TAB -->
+    <section class="tab-pane active" id="tab-connect">
+      <div class="current-target-card" id="current-target-card">
+        <div class="card-label">Active Target Tab</div>
+        <div class="target-details">
+          <div class="target-title-text" id="target-title">No tab selected</div>
+          <div class="target-url-text" id="target-url">Choose a browser tab below to begin</div>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-target">Refresh State</button>
+          <button class="btn btn-secondary btn-sm" id="btn-toggle-badges">Toggle Badges</button>
+          <button class="btn btn-secondary btn-sm" id="btn-screenshot">Screenshot</button>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <span class="section-title">Select Target Browser Tab</span>
+        <button class="btn-link" id="btn-refresh-tabs">Refresh List</button>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="tab-search" placeholder="Search open tabs by title or URL...">
+      </div>
+
+      <div class="tabs-list" id="tabs-list">
+        <div class="empty-state">Loading open tabs...</div>
+      </div>
+    </section>
+
+    <!-- TAB 2: ACTION RUNNER -->
+    <section class="tab-pane" id="tab-runner">
+      <div class="form-group">
+        <label for="runner-action-type">Action Type</label>
+        <select id="runner-action-type">
+          <option value="click">Click Element (ref / selector / text)</option>
+          <option value="type">Type Text (ref / selector)</option>
+          <option value="scroll">Scroll Viewport / Element</option>
+          <option value="select">Select Dropdown Option</option>
+          <option value="navigate">Navigate to URL</option>
+          <option value="wait">Wait (milliseconds)</option>
+          <option value="read">Read Element / Page Content</option>
+        </select>
+      </div>
+
+      <div id="runner-dynamic-fields">
+        <!-- Injected dynamically via JS based on selected action -->
+      </div>
+
+      <button class="btn btn-primary" id="btn-execute-manual">Execute Action on Target</button>
+      <div class="runner-feedback" id="runner-feedback">Select an action to test</div>
+
+      <div class="section-header mt-3">
+        <span class="section-title">Page Elements Inspector</span>
+        <button class="btn-link" id="btn-inspect-elements">Inspect Now</button>
+      </div>
+      <div class="inspector-box" id="inspector-box">
+        <div class="empty-state">Click "Inspect Now" to inspect interactive elements.</div>
+      </div>
+    </section>
+
+    <!-- TAB 3: AI GUIDE & PROMPTS -->
+    <section class="tab-pane" id="tab-prompt">
+      <div class="info-card">
+        Use this prompt template in ChatGPT, Claude, Gemini, or Meta AI to instruct the model to drive your connected tab.
+      </div>
+
+      <div class="form-group">
+        <label for="prompt-template-text">System Prompt Template</label>
+        <textarea id="prompt-template-text" rows="8" readonly></textarea>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-primary" id="btn-copy-prompt">Copy Prompt Template</button>
+        <button class="btn btn-secondary" id="btn-copy-snapshot">Copy Live Tab Snapshot</button>
+      </div>
+
+      <div class="action-specs-box">
+        <div class="spec-title">Supported Action Types:</div>
+        <ul>
+          <li><code>click</code>: by ref number, selector, or text</li>
+          <li><code>type</code>: enter text, clear input, press enter</li>
+          <li><code>scroll</code>: direction down/up/top/bottom or amount</li>
+          <li><code>select</code>: option value or visible label</li>
+          <li><code>check</code> / <code>uncheck</code>: toggles checkbox</li>
+          <li><code>wait</code>: pause execution in milliseconds</li>
+          <li><code>navigate</code>: browse target tab to a URL</li>
+          <li><code>read</code>: read element inner text or attributes</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TAB 4: SETTINGS & LOGS -->
+    <section class="tab-pane" id="tab-settings">
+      <div class="settings-group">
+        <div class="setting-item">
+          <div>
+            <div class="setting-name">Step Execution Delay</div>
+            <div class="setting-desc">Delay between consecutive AI actions in batch mode</div>
+          </div>
+          <div class="setting-control">
+            <input type="number" id="setting-delay" min="100" max="5000" step="100" value="600" style="width: 70px;"> ms
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div>
+            <div class="setting-name">Compact Snapshot Mode</div>
+            <div class="setting-desc">Omits secondary text nodes to save AI context tokens</div>
+          </div>
+          <div class="setting-control">
+            <input type="checkbox" id="setting-compact" checked>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div>
+            <div class="setting-name">Highlight Elements on Target</div>
+            <div class="setting-desc">Show numeric badge overlays automatically when snapshotting</div>
+          </div>
+          <div class="setting-control">
+            <input type="checkbox" id="setting-highlight">
+          </div>
+        </div>
+      </div>
+
+      <div class="action-row mt-2">
+        <button class="btn btn-secondary btn-sm" id="btn-save-settings">Save Settings</button>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-logs">Clear Logs</button>
+      </div>
+
+      <div class="section-header mt-3">
+        <span class="section-title">Recent Action Logs</span>
+      </div>
+      <div class="logs-container" id="logs-container">
+        <div class="empty-state">No actions logged yet.</div>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <span>TabPilot operates locally in your browser. No external servers.</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

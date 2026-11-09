@@ -14,7 +14,7 @@ from pathlib import Path
 START_MARKER = "<!-- TOOLS_TABLE_START -->"
 END_MARKER = "<!-- TOOLS_TABLE_END -->"
 
-IGNORED_DIRS = {".git", ".github", "scripts", "node_modules", "dist", "build"}
+IGNORED_DIRS = {".git", ".github", "scripts", "node_modules", "dist", "build", "tests", "docs"}
 
 
 def infer_tool_info(tool_dir: Path):
