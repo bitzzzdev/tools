@@ -21,7 +21,7 @@ A Node.js 20+ companion service for the Codex Remote Chrome extension. It starts
 5. Set CODEX_REMOTE_CONFIG to the absolute path of config.json.
 6. Start the API with: node server.mjs
 
-The API listens on localhost port 8787 by default. Configure Caddy or Nginx to provide HTTPS and proxy to 127.0.0.1:8787. Do not expose port 8787 publicly.
+The example config stores task state and worktrees under /var/lib/codex-remote. Create that directory and make it writable by the service account. The API listens on localhost port 8787 by default. Configure Caddy or Nginx to provide HTTPS and proxy to 127.0.0.1:8787. Do not expose port 8787 publicly.
 
 ## Configure the extension
 

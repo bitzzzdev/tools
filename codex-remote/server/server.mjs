@@ -21,10 +21,15 @@ try {
   for (const task of saved) tasks.set(task.id, {...task, status:task.status === "running" ? "interrupted" : task.status});
 } catch (error) { if (error.code !== "ENOENT") throw error; }
 
-async function persist() {
-  const temp = stateFile + ".tmp";
-  await fs.writeFile(temp, JSON.stringify([...tasks.values()], null, 2), {mode:0o600});
-  await fs.rename(temp, stateFile);
+let persistQueue = Promise.resolve();
+function persist() {
+  const snapshot = JSON.stringify([...tasks.values()], null, 2);
+  persistQueue = persistQueue.then(async () => {
+    const temp = stateFile + ".tmp";
+    await fs.writeFile(temp, snapshot, {mode:0o600});
+    await fs.rename(temp, stateFile);
+  });
+  return persistQueue;
 }
 function safeTask(task) {
   return {
