@@ -1,0 +1,17 @@
+{
+  "host": "127.0.0.1",
+  "port": 8787,
+  "codexCommand": "codex",
+  "stateFile": "./data/tasks.json",
+  "worktreeRoot": "./data/worktrees",
+  "allowedOrigins": ["chrome-extension://REPLACE_WITH_EXTENSION_ID"],
+  "projects": [
+    {
+      "id": "tools",
+      "name": "tools",
+      "path": "/home/dev/projects/tools",
+      "baseBranch": "dev",
+      "remote": "origin"
+    }
+  ]
+}
