@@ -1,0 +1,22 @@
+[Unit]
+Description=Codex Remote API
+After=network.target
+
+[Service]
+Type=simple
+User=dev
+Group=dev
+WorkingDirectory=/opt/codex-remote/server
+EnvironmentFile=/etc/codex-remote.env
+ExecStart=/usr/bin/node /opt/codex-remote/server/server.mjs
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/codex-remote
+
+[Install]
+WantedBy=multi-user.target

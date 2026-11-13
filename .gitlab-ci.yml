@@ -1,0 +1,14 @@
+image: node:20
+
+stages:
+  - test
+
+codex-remote-and-extension-tests:
+  stage: test
+  script:
+    - node --check codex-remote/server/server.mjs
+    - node --check codex-remote/sidepanel.js
+    - node --check codex-remote/options.js
+    - node --test tests/*.js
+  rules:
+    - if: $CI_COMMIT_BRANCH

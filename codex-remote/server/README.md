@@ -27,11 +27,17 @@ The API listens on localhost port 8787 by default. Configure Caddy or Nginx to p
 
 Load the codex-remote directory through chrome://extensions -> Developer mode -> Load unpacked. Open extension settings and enter the HTTPS API URL and token.
 
-For an unpacked extension, copy its ID from Chrome into allowedOrigins in config.json, then restart the service. If Chrome assigns a different extension ID after reinstalling, update the allowlist.
+For an unpacked extension, copy the extension ID shown by Chrome into allowedOrigins in config.json, then restart the service. If Chrome assigns a different extension ID after reinstalling, update the allowlist.
 
 ## Project configuration
 
 Every project needs an id, display name, absolute local path, baseBranch, and Git remote. Set baseBranch to dev and create that branch before enabling a repository.
+
+## systemd deployment
+
+Review codex-remote.service.example and adapt its paths, user, and writable directories. Install the unit as /etc/systemd/system/codex-remote.service. Store CODEX_REMOTE_TOKEN and CODEX_REMOTE_CONFIG in a root-readable environment file. Ensure the service account can access Codex authentication and Git credentials, and that the worktree/state directories are writable by that account.
+
+The example unit intentionally restricts filesystem writes. Adjust ReadWritePaths to include the configured worktree root, task state directory, and repository locations used by Git worktrees. Do not grant broad write access to the whole VPS.
 
 ## Operational notes
 
