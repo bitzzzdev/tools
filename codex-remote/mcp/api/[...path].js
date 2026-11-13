@@ -41,8 +41,9 @@ export default async function handler(req, res) {
   let upstreamUrl;
   try {
     const base = new URL(upstreamBase);
-    if (base.protocol !== "https:" && base.protocol !== "http:") {
-      throw new Error("Unsupported upstream protocol");
+    if (base.protocol !== "https:" || base.username || base.password ||
+        base.pathname !== "/" || base.search || base.hash) {
+      throw new Error("MCP_UPSTREAM_URL must be an HTTPS origin without credentials, path, or query.");
     }
     upstreamUrl = new URL("/" + endpoint + incoming.search, base);
   } catch {
