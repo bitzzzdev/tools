@@ -10,7 +10,7 @@ Made by [bitzzdev](https://github.com/bitzzdev).
 | Tool | Type | Description |
 |---|---|---|
 | [`chat-exporter`](chat-exporter/) | Browser Extension | Export the currently open AI conversation to Markdown, JSON, TXT, or PDF. |
-| [`codex-remote`](codex-remote/) | Browser Extension | Control Codex tasks running on your own VPS through a Chrome side panel, inspect diffs, and explicitly approve pushes to dev. |
+| [`codex-remote`](codex-remote/) | Browser Extension + VPS MCP | Control Codex tasks on your VPS and connect GitHub, GitLab, and Vercel through a remote MCP server. |
 | [`tab-pilot`](tab-pilot/) | Browser Extension | Enables ChatGPT, Claude, Gemini, Meta AI, and other AI tools to inspect, click, scroll, type, and automate any chosen browser tab. |
 <!-- TOOLS_TABLE_END -->
 
@@ -31,6 +31,11 @@ A Chrome side panel for submitting coding tasks to Codex CLI running on a person
 
 - See [`codex-remote/README.md`](codex-remote/README.md) for extension setup.
 - See [`codex-remote/server/README.md`](codex-remote/server/README.md) for VPS deployment and security configuration.
+
+### DevTools VPS MCP (`codex-remote/mcp`)
+A remote Streamable HTTP MCP server using the VPS's existing `gh`, `glab`, and Vercel CLI authentication. It exposes scoped, read-only GitHub, GitLab, and Vercel tools without arbitrary shell execution.
+
+- See [`codex-remote/mcp/README.md`](codex-remote/mcp/README.md) for installation and connection instructions.
 
 ---
 

@@ -9,4 +9,6 @@ codex-remote-and-extension-tests:
     - node --check codex-remote/server/server.mjs
     - node --check codex-remote/sidepanel.js
     - node --check codex-remote/options.js
-    - node --test tests/*.js
+    - node --check codex-remote/mcp/server.mjs
+    - cd codex-remote/mcp && npm install --ignore-scripts --no-audit --no-fund
+    - cd ../.. && node --test tests/*.js

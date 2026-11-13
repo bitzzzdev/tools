@@ -1,0 +1,21 @@
+[Unit]
+Description=DevTools Remote MCP Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dev
+Group=dev
+WorkingDirectory=/opt/tools/codex-remote/mcp
+EnvironmentFile=/etc/devtools-mcp.env
+ExecStart=/usr/bin/node /opt/tools/codex-remote/mcp/server.mjs
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadOnlyPaths=/home/dev/.config/gh /home/dev/.config/glab-cli /home/dev/.local/share/com.vercel.cli
+ReadOnlyPaths=/home/dev/.vercel
