@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Codex Remote",
+  "short_name": "Codex Remote",
+  "version": "0.1.0",
+  "description": "Control Codex tasks running on your own VPS from a Chrome side panel.",
+  "permissions": ["storage", "sidePanel"],
+  "optional_host_permissions": ["https://*/*", "http://localhost/*", "http://127.0.0.1/*"],
+  "background": {"service_worker": "service-worker.js"},
+  "action": {"default_title": "Open Codex Remote"},
+  "side_panel": {"default_path": "sidepanel.html"},
+  "options_page": "options.html"
+}
